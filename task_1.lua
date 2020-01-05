@@ -1,32 +1,4 @@
--- function that checks is the file exists
-function file_exists(file_name)
-	-- try open the file
-	local f =  io.open(file_name, "rb")
-	-- if the file was opened successfuly, close it
-	if f then
-		-- close the file
-		f:close()
-	end
-	-- return an indicator that file was opened or not
-	return f ~= nil
-end
-
--- function that reads lines fron file and returns table of lines
-function get_file_lines(file_name)
-	-- check if file exists, if not -> return empty table
-	if not file_exists(file_name) then
-		return {}
-	end
-	-- lines of the file to return
-	local lines = {}
-	-- read line by line the file
-	for line in io.lines(file_name) do
-		-- add a new element to the lines table, remove a \n from a read line
-		lines[#lines + 1] = string.gsub(line, "\n", "")
-	end
-	-- return the result
-	return lines
-end
+require 'file_processing_utilities'
 
 -- function that prints 1-d table
 function print_table(table_to_print)
@@ -204,7 +176,7 @@ function main()
 	-- the output file for debug
 	-- file = io.open('my_result.txt', 'a+')
 	-- print if file with a specific name exists, debug check
-	print(string.format("File %s, exists: %s", file_name, tostring(file_exists(file_name))))
+	print(string.format("File %s exists: %s", file_name, tostring(file_exists(file_name))))
 	-- read the file content
 	roman_numbers = get_file_lines(file_name, file)
 	-- nubmer of saved symbols
